@@ -4,7 +4,6 @@ project(ProyectoVisionParte1 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Basado en los CMakeLists.txt de los ejemplos de la asignatura.
 # La ruta local de OpenCV se indica al configurar, no se fija en este archivo.
 find_package(OpenCV REQUIRED COMPONENTS core highgui videoio)
 

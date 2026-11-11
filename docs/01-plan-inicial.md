@@ -104,14 +104,6 @@ No asumir que usar `UMat` convierte automáticamente cualquier recorrido manual 
 - Mantener todos los archivos del proyecto dentro de `Proyecto Parte 1`.
 - Descargar los cambios compartidos antes de trabajar y coordinar quién modifica cada archivo; al inicio habrá un único `Principal.cpp`.
 - Guardar avances pequeños que compilen y tengan una descripción clara. La documentación puede guardarse antes de que exista código.
-- Registrar el ejemplo de origen de cada adaptación, qué se cambió y por qué.
-- Anotar la asistencia de IA y revisar cada línea antes de usarla en la entrega.
+- Reservar para el informe final las fuentes y la explicación de las adaptaciones.
+- Revisar cada línea antes de usarla en la entrega; documentar la asistencia de IA en el informe final.
 - No subir ejecutables, carpetas de compilación ni vídeos grandes; el `.gitignore` actual ya contempla estos casos habituales.
-
-## Fuentes de esta planificación
-
-- Guía local del proyecto: Parte I y rúbricas, páginas 3 a 8; recomendaciones de inicio de Android, páginas 14 y 15.
-- Ejemplos locales de Unidad 1 y Unidad 2 citados en la tabla.
-- README actual del repositorio.
-- Mensajes recientes accesibles del chat «Revisión Parte I», relativos a la creación del repositorio y su sincronización. La lectura disponible no expuso toda la conversación previa; esta propuesta no presupone que allí ya se haya acordado un efecto específico.
-- Asistencia de Codex en la revisión de archivos y organización de esta propuesta. No se generó código C++ en este paso.
