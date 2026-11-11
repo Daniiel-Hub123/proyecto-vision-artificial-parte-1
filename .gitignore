@@ -1,0 +1,48 @@
+# Archivos de compilación
+build/
+build-*/
+cmake-build-*/
+CMakeFiles/
+CMakeCache.txt
+*.o
+*.obj
+*.exe
+*.bin
+*.dll
+*.so
+*.a
+*.lib
+*.pdb
+
+# Configuración local
+.vs/
+.vscode/
+.idea/
+.gradle/
+.cxx/
+local.properties
+
+# Entornos y secretos
+.env
+.env.*
+!.env.example
+.venv/
+venv/
+__pycache__/
+*.pyc
+*.jks
+*.keystore
+
+# Capturas y resultados temporales
+assets/local/
+results/local/
+*.mp4
+*.avi
+*.mov
+*.mkv
+*.log
+
+# Sistema
+.DS_Store
+Thumbs.db
+Desktop.ini
