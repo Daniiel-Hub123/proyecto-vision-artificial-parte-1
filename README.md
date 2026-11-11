@@ -42,7 +42,3 @@ Primer avance implementado: captura de cámara y conversión manual a gris ponde
 Las instrucciones de compilación, explicación del código y pruebas están en [Inicio: cámara y gris](docs/02-inicio-camara-gris.md).
 
 La propuesta de efecto, repartición entre Daniel y Xavier y alcance del primer avance están en [el plan inicial](docs/01-plan-inicial.md).
-
-## Fuentes y uso de IA
-
-Documentar en docs/ las fuentes de los ejemplos, el código de terceros y la asistencia de IA utilizada, explicando las adaptaciones realizadas.

@@ -71,13 +71,3 @@ Para mantener visible la matemática del ejemplo se usa el recorrido manual, en 
 - El entorno de Xavier todavía no se ha probado.
 
 Esta instalación puede imprimir advertencias de GStreamer al buscar un backend de captura antes de abrir la cámara con otro disponible. En la prueba de escritorio la apertura y el vídeo funcionaron. Si solo aparece el error de apertura, cerrar otras aplicaciones que ocupen la cámara y comprobar el índice seleccionado y los permisos de cámara de Windows.
-
-## Mensaje que Daniel puede enviar a Xavier
-
-> Ya está preparado el primer avance en C++: compilación con CMake, captura de cámara y dos ventanas, original y gris. Está basado en el Ejemplo 2 de Unidad 1 y calcula el gris por píxel con la fórmula ponderada. Yo comprobé que compila, abre la cámara y sale con ESC. Descarga los cambios, revisa `src/Principal.cpp` y `docs/02-inicio-camara-gris.md`, y prueba lo mismo en tu equipo usando tus rutas de OpenCV y compilador. Por ahora enfoquémonos en entender y probar esta parte antes de incorporar filtros.
-
-## Fuentes y asistencia
-
-- Base de la captura, ventanas y conversión por píxel: `Unidad 1/Ejemplo-2-Conformación-Imágenes-Escala-Grises-Video-OpenCV/Ejemplo-2-Conformación-Imágenes-Escala-Grises-Video-OpenCV/Principal.cpp`, en la carpeta de la asignatura.
-- Base de CMake: `CMakeLists.txt` de ese mismo ejemplo. Se retiró la ruta del equipo del docente y se seleccionaron los módulos usados en esta versión: `core`, `highgui` y `videoio`.
-- Asistencia de Codex: adaptación del ejemplo a esta versión mínima, comprobaciones de apertura y lectura, configuración de compilación y redacción de esta explicación. Solicitud: preparar la compilación, cámara y gris para compartir el avance con Xavier. Ambos integrantes deben revisar y comprender cada línea antes de la sustentación.
