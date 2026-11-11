@@ -37,7 +37,9 @@ La firma de forma y Fourier corresponden a la Parte II.
 
 ## Estado inicial
 
-Estructura del repositorio preparada. Todavía no hay código implementado ni instrucciones de compilación verificadas.
+Primer avance implementado: captura de cámara y conversión manual a gris ponderado, basado en el Ejemplo 2 de Unidad 1. Compilación, visualización y cierre con ESC comprobados en el equipo de Daniel; pendiente de probar en el de Xavier.
+
+Las instrucciones de compilación, explicación del código y pruebas están en [Inicio: cámara y gris](docs/02-inicio-camara-gris.md).
 
 La propuesta de efecto, repartición entre Daniel y Xavier y alcance del primer avance están en [el plan inicial](docs/01-plan-inicial.md).
 
