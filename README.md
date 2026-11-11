@@ -39,6 +39,8 @@ La firma de forma y Fourier corresponden a la Parte II.
 
 Estructura del repositorio preparada. Todavía no hay código implementado ni instrucciones de compilación verificadas.
 
+La propuesta de efecto, repartición entre Daniel y Xavier y alcance del primer avance están en [el plan inicial](docs/01-plan-inicial.md).
+
 ## Fuentes y uso de IA
 
 Documentar en docs/ las fuentes de los ejemplos, el código de terceros y la asistencia de IA utilizada, explicando las adaptaciones realizadas.
