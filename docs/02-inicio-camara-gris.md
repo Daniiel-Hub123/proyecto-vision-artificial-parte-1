@@ -68,6 +68,12 @@ Para mantener visible la matemática del ejemplo se usa el recorrido manual, en 
 - Ejecución de escritorio: cámara abierta y ventanas `Original` y `Gris` comprobadas visualmente.
 - Cierre con ESC: proceso finalizado con código 0.
 - En el entorno restringido de la herramienta, la apertura de cámara falló y el programa mostró el mensaje previsto y terminó con código 1. La prueba de cámara satisfactoria se realizó fuera de ese entorno restringido.
-- El entorno de Xavier todavía no se ha probado.
+
+## Pruebas realizadas en el equipo de Xavier
+- Sistema operativo: Windows 11
+- Compilador: g++ 16.2.0 (MSYS2 UCRT64)
+- OpenCV: 5.0.0 (MSYS2 UCRT64)
+- Build system: CMake 4.4.4, Ninja 1.13.2
+- Resultado: compilación exitosa, ventanas Original y Gris mostraron vídeo continuo, cierre con ESC correcto (código 0).
 
 Esta instalación puede imprimir advertencias de GStreamer al buscar un backend de captura antes de abrir la cámara con otro disponible. En la prueba de escritorio la apertura y el vídeo funcionaron. Si solo aparece el error de apertura, cerrar otras aplicaciones que ocupen la cámara y comprobar el índice seleccionado y los permisos de cámara de Windows.
