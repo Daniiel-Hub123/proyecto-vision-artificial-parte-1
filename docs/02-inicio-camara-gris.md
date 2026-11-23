@@ -13,30 +13,30 @@ Solo se han incorporado captura y conversión a gris. Los filtros del efecto se 
 
 ## Compilar en el equipo de Daniel (PowerShell)
 
-Abrir la terminal dentro de `Proyecto Parte 1`. Estos comandos usan las herramientas que se encontraron y probaron en este equipo; no requieren instalar nada adicional:
+Abrir la terminal dentro de `Proyecto Interciclo`. Estos comandos usan las herramientas que se encontraron y probaron en este equipo; no requieren instalar nada adicional:
 
 ```powershell
 $env:Path = "C:/msys64/ucrt64/bin;" + $env:Path
 
-cmake -S . -B build -G Ninja `
+cmake -S . -B build-interciclo -G Ninja `
   "-DCMAKE_MAKE_PROGRAM=C:/Users/ASUS/miniconda3/envs/opencv_pytorch/Library/bin/ninja.exe" `
   "-DCMAKE_CXX_COMPILER=C:/msys64/ucrt64/bin/g++.exe" `
   "-DOpenCV_DIR=C:/msys64/ucrt64/lib/cmake/opencv5"
 
-cmake --build build
-if ($LASTEXITCODE -eq 0) { ./build/vision_parte1.exe }
+cmake --build build-interciclo
+if ($LASTEXITCODE -eq 0) { ./build-interciclo/vision_parte1.exe }
 ```
 
 El acento invertido al final de una línea de PowerShell continúa el mismo comando: no colocar espacios después de él. Ejecutar la compilación solo si la configuración terminó sin errores.
 
 - `-S .`: usar el proyecto de la carpeta actual.
-- `-B build`: guardar los archivos generados dentro de `build`.
+- `-B build-interciclo`: guardar los archivos generados dentro de `build-interciclo`.
 - `-G Ninja` y `CMAKE_MAKE_PROGRAM`: seleccionar la herramienta que ejecuta las tareas de compilación.
 - `CMAKE_CXX_COMPILER`: seleccionar el compilador C++ compatible con esta instalación de OpenCV.
 - `OpenCV_DIR`: indicar la carpeta que contiene `OpenCVConfig.cmake`.
 - La modificación de `Path` es temporal para esa terminal y permite encontrar las DLL de OpenCV al ejecutar.
 
-Después de modificar únicamente `Principal.cpp`, basta con repetir `cmake --build build` y ejecutar el programa.
+Después de modificar únicamente `Principal.cpp`, basta con repetir `cmake --build build-interciclo` y ejecutar el programa.
 
 ## Para Xavier
 

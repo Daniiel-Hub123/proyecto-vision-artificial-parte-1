@@ -101,7 +101,7 @@ No asumir que usar `UMat` convierte automáticamente cualquier recorrido manual 
 
 ## Trabajo en el repositorio
 
-- Mantener todos los archivos del proyecto dentro de `Proyecto Parte 1`.
+- Mantener todos los archivos del proyecto dentro de `Proyecto Interciclo`.
 - Descargar los cambios compartidos antes de trabajar y coordinar quién modifica cada archivo; al inicio habrá un único `Principal.cpp`.
 - Guardar avances pequeños que compilen y tengan una descripción clara. La documentación puede guardarse antes de que exista código.
 - Reservar para el informe final las fuentes y la explicación de las adaptaciones.
