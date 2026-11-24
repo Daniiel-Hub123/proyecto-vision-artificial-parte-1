@@ -1,5 +1,8 @@
 # Etapa 2 (Continuación): Detección de Bordes con Sobel y Operación Morfológica
 
+El panel Morfología muestra la dilatación en cruz de 3 × 3 sobre Sobel. Pintura / Vitral aplica su propia erosión al fotograma BGR. Ver [Propuestas de filtros](05-filtros-propuesta.md).
+
+
 ## Objetivo y Orden del Pipeline
 
 En este avance se completa la integración de los **cuatro filtros base** requeridos por la rúbrica del proyecto, partiendo de los ejemplos vistos en clase:
@@ -10,7 +13,7 @@ En este avance se completa la integración de los **cuatro filtros base** requer
 4. **Filtro 3: Detección de Bordes con Sobel** (`Sobel` X e Y + combinación) — Estimación del gradiente espacial (Unidad 2 - Ejemplo 6).
 5. **Filtro 4: Operación Morfológica** (`morphologyEx` con dilatación) — Ajuste y engrosamiento del trazo (Unidad 2 - Ejemplo 7).
 
-Para visualizarlos de forma simultánea e interactiva, el lienzo se organiza en **2 filas por 3 columnas** (6 cuadrantes en total), permitiendo inspeccionar cada etapa paso a paso.
+El aporte original reunió seis vistas en dos filas de tres. El lienzo actual conserva esas filas y muestra las tres propuestas en una tercera.
 
 ---
 
@@ -44,8 +47,8 @@ addWeighted(gXPos, 0.5, gYPos, 0.5, 0, bordesSobel);
 #### Parámetros de `convertScaleAbs` y `addWeighted`:
 * **`convertScaleAbs(gX, gXPos)`:** Calcula el valor absoluto de cada pixel $|G_x|$ y lo convierte a `CV_8U` (rango 0 a 255 con saturación).
 * **`addWeighted(gXPos, 0.5, gYPos, 0.5, 0, bordesSobel)`:** Realiza una combinación lineal ponderada:
-  $$\text{bordesSobel} = 0.5 \times |G_x| + 0.5 \times |G_y| + 0$$
-  Aproxima la magnitud total del gradiente $|\nabla I| \approx |G_x| + |G_y|$ de forma computacionalmente eficiente sin recurrir a raíces cuadradas pesadas en CPU.
+  $$\text{bordesSobel} = 0.5 \times \operatorname{sat}_8(|G_x|) + 0.5 \times \operatorname{sat}_8(|G_y|)$$
+  Es una combinación para visualizar bordes, con redondeo de la salida. `sat_8` limita los valores al intervalo 0 a 255 antes de combinarlos. No es la magnitud euclidiana exacta `sqrt(Gx*Gx + Gy*Gy)` ni conserva todo el rango de las derivadas originales.
 
 ---
 
@@ -67,11 +70,11 @@ morphologyEx(bordesSobel, bordesMorf, MORPH_DILATE, elementoMorf);
 * **`Point(-1, -1)`:** Posición del punto de anclaje (centro del elemento estructurante por defecto).
 
 #### Parámetros de `morphologyEx(src, dst, op, kernel)`:
-* **`bordesSobel` (src):** Imagen binaria o en escala de grises con los bordes detectados.
+* **`bordesSobel` (src):** En este programa, imagen en escala de grises con los bordes detectados; no se ha aplicado binarización.
 * **`bordesMorf` (dst):** Imagen resultante.
 * **`MORPH_DILATE`:** Operación de dilatación. Asigna a cada píxel el valor máximo dentro de la vecindad definida por el elemento estructurante:
   $$(I \oplus B)(x, y) = \max_{(i, j) \in B} I(x - i, y - j)$$
-  *Efecto visual:* Expande y engrosa los trazos blancos de los bordes, conectando trazos discontinuos para crear líneas firmes estilo dibujo/grabado.
+  *Efecto visual:* Expande y engrosa los trazos blancos de los bordes, pudiendo conectar trazos próximos y reforzando la respuesta de los bordes.
 
 ---
 
@@ -86,9 +89,9 @@ morphologyEx(bordesSobel, bordesMorf, MORPH_DILATE, elementoMorf);
 
 ---
 
-## Comprobación Visual del Lienzo 2x3
+## Comprobación visual de los cuatro filtros base
 
-Al ejecutar el programa, se abre la ventana `Lienzo` que muestra:
+Las dos primeras filas de la ventana `Lienzo` muestran:
 
 ```
 +--------------------+--------------------+--------------------+
@@ -105,3 +108,9 @@ Al ejecutar el programa, se abre la ventana `Lienzo` que muestra:
 2. **Ecualizada vs Gaussiano:** El suavizado elimina el grano fino y ruido introducido por la ecualización.
 3. **Gaussiano vs Sobel:** Sobel resalta en líneas blancas los contornos de objetos, rostro y manos sobre un fondo negro.
 4. **Sobel vs Morfología:** La dilatación engrosa notablemente los bordes, haciendo que las líneas sean más densas y visibles.
+
+## Revisión del avance
+
+La integración de Sobel, dilatación y seis vistas es coherente con el flujo previsto. La dilatación toma máximos en la vecindad en cruz y engrosa los trazos claros; el ejemplo del profesor usa erosión sobre Laplaciano, por lo que aquí se adapta la operación al objetivo de engrosamiento sobre Sobel. No se requiere binarizar para esta dilatación en gris.
+
+Comprobación realizada: `make` termina correctamente. Falta registrar una nueva comprobación visual del lienzo y de la salida con ESC para esta etapa. Los cuatro filtros base y las tres propuestas están integrados. Queda por elegir el efecto para la entrega.

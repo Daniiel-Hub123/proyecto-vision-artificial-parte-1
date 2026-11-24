@@ -45,7 +45,11 @@ La propuesta de efecto, repartición entre Daniel y Xavier y alcance del primer 
 
 ## Avance actual
 
-Se incorporaron ecualización y suavizado Gaussiano. Consultar [la etapa de filtros](docs/03-ecualizacion-gaussiano.md). La prueba de Xavier corresponde a cámara y gris; estos filtros aún deben probarse en su equipo.
+Captura de cámara, conversión a gris y cuatro filtros base: ecualización, Gaussiano, Sobel X/Y y dilatación en cruz. Hay tres propuestas para comparar antes de elegir el efecto final: Pintura / Vitral, Glitch RGB y Glitch de bloques.
+
+Quedan pendientes los controles, CPU/OpenCL, mediciones, Android y VTK.
+
+Consultar [Ecualización y Gaussiano](docs/03-ecualizacion-gaussiano.md), [Sobel y morfología](docs/04-sobel-morfologia.md) y [Propuestas de filtros](docs/05-filtros-propuesta.md).
 
 ## Próximos entregables
 
@@ -65,9 +69,9 @@ make
 make run
 ```
 
-`make` configura y compila; `make run` compila primero y luego abre la aplicación. ESC cierra las ventanas de vídeo. Se requieren Make, CMake y Ninja en el PATH.
+`make` configura y compila; `make run` compila primero y luego abre la aplicación. ESC cierra el lienzo. Se requieren Make, CMake y Ninja en el PATH.
 
-El Makefile reutiliza `CMakeLists.txt`: los nuevos archivos C++ y módulos de OpenCV se agregan allí. La salida se guarda en `build-make-ninja/`, ignorada por Git.
+El Makefile usa `CMakeLists.txt` para compilar. CMake enlaza `imgcodecs` para la compresión JPEG en memoria de Glitch de bloques. La salida se guarda en `build-make-ninja/`, ignorada por Git.
 
 En Windows se usa por defecto OpenCV 5 y el compilador de MSYS2 UCRT64 instalados en `C:/msys64/ucrt64`. Para otro equipo se pueden cambiar las rutas sin editar el archivo:
 
@@ -82,4 +86,10 @@ Validación del Makefile: compilación completa correcta y comprobación de los 
 
 ## Visualización de desarrollo
 
-Una sola ventana `Lienzo` reúne Original y Gris arriba, Ecualizada y Gaussiano abajo. Se puede redimensionar y cerrar el programa con ESC.
+El lienzo reúne el original, el gris y los cuatro filtros base en las dos primeras filas. El panel Morfología muestra la dilatación en cruz de 3 × 3 aplicada a Sobel. La última fila muestra los tres efectos, cada uno implementado en su propia función.
+
+- **Pintura / Vitral** combina la erosión a color con contornos negros derivados de Sobel.
+- **Glitch RGB** desplaza azul y rojo en sentidos opuestos y refuerza el desfase cerca de los contornos.
+- **Glitch de bloques** usa JPEG de calidad 6 como fondo. Cerca de los contornos dilatados aplica una apertura cuadrada de 11 × 11. La ecualización, el Gaussiano y Sobel alimentan el mapa de contornos.
+
+Las máscaras se usan dentro de las funciones. Ejecutar `make run` y salir con ESC.

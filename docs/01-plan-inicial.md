@@ -1,6 +1,6 @@
 # Paso 0: planificación antes del código
 
-Estado: propuesta inicial. Todavía no se ha implementado ni probado el programa.
+Los cuatro filtros base y tres propuestas están implementados. Consultar [Propuestas de filtros](05-filtros-propuesta.md).
 
 ## Alcance de la Parte I
 
@@ -18,24 +18,9 @@ Según la guía local `../../Guia-Proyecto-Integrador-Visión-Artificial-G9_.pdf
 
 La escala de grises será preparación de la imagen: no la contaremos como uno de los cuatro filtros. La ventana 2D servirá durante el aprendizaje y las pruebas; la entrega de escritorio requiere la integración 3D. El reconocimiento de señas, FFT y bot pertenecen a la Parte II.
 
-## Propuesta sencilla de efecto
+## Propuestas para comparar
 
-Nombre provisional: **Grabado a dos tonos con bordes oscuros**.
-
-Aspecto buscado: imagen similar a una impresión sobre papel, con zonas claras y oscuras en dos colores elegidos y contornos marcados.
-
-Flujo inicial propuesto:
-
-1. Capturar el fotograma y convertirlo a gris.
-2. Ecualizar el gris para realzar el contraste.
-3. Suavizar mediante un filtro Gaussiano.
-4. Obtener los bordes mediante Sobel en X e Y y combinar sus magnitudes.
-5. Aplicar una operación morfológica sobre los bordes para ajustar el grosor del trazo.
-6. Aplicar el efecto propio: elegir el tono de cada píxel según su intensidad y oscurecerlo según la máscara de bordes. Parametrizar el umbral tonal, los colores y la intensidad del trazo.
-
-Los cuatro filtros base serán ecualización, Gaussiano, Sobel y morfología. Sobel X e Y cuentan juntos como un filtro. La transformación artística final se documentará por separado; aún debemos definir su fórmula exacta y comprobar el resultado visual. Si hace falta una convolución propia adicional para justificar el diseño, se decidirá al trabajar esa etapa a partir del Ejemplo 5, sin añadirla ahora.
-
-Es una propuesta para trabajar, no un efecto ya acordado ni una garantía de exclusividad. Antes de cerrarlo, comprobar con el docente que el diseño no coincide con el de otro grupo.
+Comparar Pintura / Vitral, Glitch RGB y Glitch de bloques en la última fila del lienzo y elegir el efecto para la entrega. Los pasos y parámetros están en [Propuestas de filtros](05-filtros-propuesta.md).
 
 ## Ejemplos que usaremos como base
 
@@ -60,7 +45,7 @@ Ser responsable significa preparar y explicar esa parte; ambos deben comprender 
 | --- | --- | --- | --- |
 | Primer avance | Preparar compilación de escritorio, captura, original y gris. | Revisar el Ejemplo 2 y preparar pruebas de cámara y una explicación de la conversión a gris. | Ejecutar en los dos equipos y explicar el bucle de captura. |
 | Filtros base | Ecualización y Gaussiano. | Sobel y morfología. | Probar cada filtro por separado y explicar parámetros. |
-| Efecto e interfaz | Transformación propia de tonos y combinación con bordes. | Trackbars y visualización de pasos intermedios. | Ajustar el diseño visual y escribir su explicación matemática. |
+| Efecto e interfaz | Preparar las propuestas y ajustar el efecto elegido. | Trackbars y visualización de pasos intermedios. | Ajustar el diseño visual y escribir su explicación matemática. |
 | Comparación CPU/OpenCL | Versión equivalente con `UMat` y comprobación de OpenCL. | Medición de tiempos, FPS y memoria; tablas y gráficas. | Usar el mismo vídeo, resolución y parámetros, y comprobar que los resultados coincidan. |
 | Plataformas | Integración de escritorio con `cv::viz`/VTK. | Integración Android con JNI y C++ nativo. | Compartir el procesamiento y comprobarlo en ambas plataformas. |
 | Entrega | Redactar diseño del efecto y resultados de escritorio. | Redactar integración móvil y comparaciones. | Informe, citas, diagrama, vídeo en inglés y ensayo de defensa. |

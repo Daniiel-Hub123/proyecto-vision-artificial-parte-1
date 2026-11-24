@@ -1,6 +1,8 @@
 # Primer avance: compilación, cámara y gris
 
-## Qué hace esta versión
+Esta página conserva el registro del primer avance. La implementación actual convierte a gris con `cvtColor` y muestra las etapas en un solo lienzo. Para ejecutar la versión actual, consultar [Comandos rápidos](../README.md#comandos-rápidos).
+
+## Qué hacía el primer avance
 
 Abre la cámara predeterminada y muestra dos ventanas: `Original` (color) y `Gris` (gris ponderado). Se termina presionando ESC con una ventana de vídeo activa. Si no se puede abrir la cámara o leer un fotograma, muestra un mensaje de error y devuelve el código 1; la salida normal devuelve 0.
 
@@ -38,7 +40,7 @@ El acento invertido al final de una línea de PowerShell continúa el mismo coma
 
 Después de modificar únicamente `Principal.cpp`, basta con repetir `cmake --build build-interciclo` y ejecutar el programa.
 
-## Para Xavier
+## Prueba del primer avance en el equipo de Xavier
 
 1. Descargar lo último del repositorio con `git pull origin main` dentro de su copia local.
 2. Revisar el `Principal.cpp` del Ejemplo 2 de Unidad 1 y compararlo con el del proyecto.
@@ -48,7 +50,7 @@ Después de modificar únicamente `Principal.cpp`, basta con repetir `cmake --bu
 
 No mezclar una biblioteca OpenCV compilada para Visual Studio con el compilador MinGW. En el equipo de Daniel se probó el compilador de MSYS2 UCRT64 con OpenCV de ese mismo entorno.
 
-## Explicación del código para ambos
+## Explicación del código original
 
 1. `VideoCapture video(0)` abre la cámara de índice 0. Si hay varias, se puede probar el índice 1 cambiando esa línea y recompilando.
 2. `isOpened()` comprueba si la apertura tuvo éxito.

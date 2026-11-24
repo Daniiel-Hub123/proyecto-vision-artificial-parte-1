@@ -2,14 +2,14 @@
 
 ## Objetivo y orden
 
-El programa muestra una ventana llamada Lienzo con cuatro cuadrantes: Original (arriba izquierda), Gris (arriba derecha), Ecualizada (abajo izquierda) y Gaussiano (abajo derecha). El flujo es cámara → gris ponderado → ecualización → Gaussiano. El gris manual de la primera etapa se conserva.
+El flujo es cámara → gris con `cvtColor` → ecualización → Gaussiano. En el lienzo actual, Original, Gris y Ecualizada están en la primera fila. Gaussiano está a la izquierda de la segunda.
 
 La ecualización redistribuye intensidades usando la distribución acumulada del histograma. Puede mejorar el contraste, pero también realzar ruido. El Gaussiano posterior suaviza variaciones locales antes de obtener bordes en la siguiente etapa.
 
 ## Parámetros que debemos entender
 
 - `equalizeHist(gris, ecualizada)` recibe una imagen de un canal y 8 bits y escribe una salida distinta, para conservar el gris de comparación.
-- `GaussianBlur(ecualizada, suavizada, Size(5, 5), 1.73, 1.73)` usa una ventana impar de 5 × 5 y desviación estándar 1.73 en ambos ejes. Sus pesos siguen una distribución gaussiana y se normalizan para sumar uno.
+- `GaussianBlur(ecualizada, suavizada, Size(5, 5), 0)` usa una ventana impar de 5 × 5. El valor cero pide a OpenCV calcular la desviación estándar según el tamaño de la ventana. Sus pesos siguen una distribución gaussiana y se normalizan para sumar uno.
 - El peso de un vecino es proporcional a `exp(-(x*x + y*y)/(2*sigma*sigma))`: los vecinos más cercanos al centro tienen mayor influencia.
 - Una ventana mayor suele suavizar más y aumenta el trabajo; por ahora los parámetros son fijos. No se añadieron controles todavía.
 - Se añadió el módulo `imgproc` a CMake y su cabecera al C++.
@@ -32,21 +32,20 @@ Validación realizada: configuración y compilación correctas con OpenCV 5.0.0 
 
 ## Comprobación visual pendiente
 
-1. Abrir la cámara y confirmar que los cuatro cuadrantes actualizan la misma escena.
+1. Abrir la cámara con `make run` y confirmar que Original, Gris, Ecualizada y Gaussiano actualizan la misma escena.
 2. Comparar Gris y Ecualizada con una escena de poco contraste. No todas las escenas mejoran con ecualización global.
-3. Comparar Ecualizada y Gaussiano en textura fina: la última debe verse más suave. No se busca aún el efecto artístico final.
+3. Comparar Ecualizada y Gaussiano en textura fina: la última debe verse más suave.
 4. Probar iluminación clara y tenue, mover la mano frente a la cámara y salir con ESC.
 5. Xavier debe repetir esta prueba y registrar su resultado sin sustituir el registro anterior de cámara y gris.
 
-## Siguiente reparto
+## Reparto de la etapa
 
 - Daniel: ecualización y Gaussiano implementados en este avance; revisar el resultado visual y comprender los parámetros.
-- Xavier: añadir Sobel X/Y y combinar sus magnitudes; después añadir morfología para controlar el trazo, siguiendo los Ejemplos 6 y 7.
-- Ambos: cerrar el diseño provisional del grabado a dos tonos y preparar su explicación matemática. Comprobar con el docente que el efecto no coincide con otro grupo.
+- Xavier: implementó Sobel X/Y y morfología siguiendo los Ejemplos 6 y 7.
+- Ambos: comparar las [tres propuestas](05-filtros-propuesta.md), elegir el efecto final y preparar su explicación matemática.
 
 ## Pendientes según la rúbrica
 
-- Completar cuatro filtros distintos: ecualización y Gaussiano están implementados; faltan Sobel y morfología. La conversión a gris no se cuenta como filtro.
 - Diseñar y justificar el filtro propio y la manipulación de píxeles del efecto final.
 - Incorporar controles de tamaño y peso del kernel y consulta de pasos intermedios.
 - Implementar procesamiento equivalente CPU (`Mat`) y OpenCL (`UMat`), verificando el dispositivo usado.
@@ -59,6 +58,6 @@ Las carpetas Android, informe, vídeo y mediciones son espacios de trabajo prepa
 
 ## Lienzo de comparación
 
-Se utiliza una matriz BGR del doble de ancho y alto del fotograma. `Rect(x, y, ancho, alto)` selecciona cada cuadrante y `copyTo` copia la imagen en esa región. Las imágenes de gris se convierten temporalmente a BGR para igualar los tres canales del lienzo, sin alterar las matrices procesadas. Los rótulos se dibujan solo en el lienzo.
+Se utiliza una matriz BGR de tres veces el ancho y tres veces el alto del fotograma. `Rect(x, y, ancho, alto)` selecciona cada cuadrante y `copyTo` copia la imagen en esa región. Las imágenes de gris se convierten temporalmente a BGR para igualar los tres canales del lienzo, sin alterar las matrices procesadas. Los rótulos se dibujan solo en el lienzo.
 
 `create` reutiliza la memoria si las dimensiones no cambian y la ajusta si cambia el tamaño del fotograma. La ventana se puede redimensionar y ESC conserva la salida del programa. Este panel 2D es de desarrollo: siguen pendientes Android y la visualización 3D de escritorio.
