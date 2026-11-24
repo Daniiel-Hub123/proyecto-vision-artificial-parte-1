@@ -2,7 +2,7 @@
 
 ## Objetivo y orden
 
-El flujo es cámara → gris con `cvtColor` → ecualización → Gaussiano. En el lienzo actual, Original, Gris y Ecualizada están en la primera fila. Gaussiano está a la izquierda de la segunda.
+El flujo es cámara → gris con `cvtColor` → ecualización → Gaussiano. En el lienzo actual, Original, Gris y Ecualizada están en la primera fila. En la segunda están Gaussiano, Sobel, Morfología y Térmico.
 
 La ecualización redistribuye intensidades usando la distribución acumulada del histograma. Puede mejorar el contraste, pero también realzar ruido. El Gaussiano posterior suaviza variaciones locales antes de obtener bordes en la siguiente etapa.
 
@@ -42,7 +42,7 @@ Validación realizada: configuración y compilación correctas con OpenCV 5.0.0 
 
 - Daniel: ecualización y Gaussiano implementados en este avance; revisar el resultado visual y comprender los parámetros.
 - Xavier: implementó Sobel X/Y y morfología siguiendo los Ejemplos 6 y 7.
-- Ambos: comparar las [tres propuestas](05-filtros-propuesta.md), elegir el efecto final y preparar su explicación matemática.
+- Ambos: probar el [filtro térmico](05-filtro-termico.md) y preparar su explicación matemática.
 
 ## Pendientes según la rúbrica
 
@@ -58,6 +58,6 @@ Las carpetas Android, informe, vídeo y mediciones son espacios de trabajo prepa
 
 ## Lienzo de comparación
 
-Se utiliza una matriz BGR de tres veces el ancho y tres veces el alto del fotograma. `Rect(x, y, ancho, alto)` selecciona cada cuadrante y `copyTo` copia la imagen en esa región. Las imágenes de gris se convierten temporalmente a BGR para igualar los tres canales del lienzo, sin alterar las matrices procesadas. Los rótulos se dibujan solo en el lienzo.
+Se utiliza una matriz BGR de cuatro veces el ancho y dos veces el alto del fotograma. `Rect(x, y, ancho, alto)` selecciona cada cuadrante y `copyTo` copia la imagen en esa región. Las imágenes de gris se convierten temporalmente a BGR para igualar los tres canales del lienzo, sin alterar las matrices procesadas. Los rótulos se dibujan solo en el lienzo.
 
-`create` reutiliza la memoria si las dimensiones no cambian y la ajusta si cambia el tamaño del fotograma. La ventana se puede redimensionar y ESC conserva la salida del programa. Este panel 2D es de desarrollo: siguen pendientes Android y la visualización 3D de escritorio.
+El lienzo se inicializa en negro con `Mat::zeros` al recibir el primer fotograma y se vuelve a crear si cambian sus dimensiones. La ventana se puede redimensionar y ESC conserva la salida del programa. Este panel 2D es de desarrollo: siguen pendientes Android y la visualización 3D de escritorio.

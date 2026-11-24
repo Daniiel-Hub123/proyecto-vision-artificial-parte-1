@@ -1,6 +1,6 @@
 # Paso 0: planificación antes del código
 
-Los cuatro filtros base y tres propuestas están implementados. Consultar [Propuestas de filtros](05-filtros-propuesta.md).
+El filtro térmico y los cuatro filtros base están implementados. Consultar [Filtro térmico](05-filtro-termico.md).
 
 ## Alcance de la Parte I
 
@@ -18,9 +18,9 @@ Según la guía local `../../Guia-Proyecto-Integrador-Visión-Artificial-G9_.pdf
 
 La escala de grises será preparación de la imagen: no la contaremos como uno de los cuatro filtros. La ventana 2D servirá durante el aprendizaje y las pruebas; la entrega de escritorio requiere la integración 3D. El reconocimiento de señas, FFT y bot pertenecen a la Parte II.
 
-## Propuestas para comparar
+## Efecto actual
 
-Comparar Pintura / Vitral, Glitch RGB y Glitch de bloques en la última fila del lienzo y elegir el efecto para la entrega. Los pasos y parámetros están en [Propuestas de filtros](05-filtros-propuesta.md).
+Asignar colores según el brillo de cada píxel suavizado y marcar los contornos con la dilatación de Sobel. Los parámetros están en [Filtro térmico](05-filtro-termico.md).
 
 ## Ejemplos que usaremos como base
 
@@ -45,7 +45,7 @@ Ser responsable significa preparar y explicar esa parte; ambos deben comprender 
 | --- | --- | --- | --- |
 | Primer avance | Preparar compilación de escritorio, captura, original y gris. | Revisar el Ejemplo 2 y preparar pruebas de cámara y una explicación de la conversión a gris. | Ejecutar en los dos equipos y explicar el bucle de captura. |
 | Filtros base | Ecualización y Gaussiano. | Sobel y morfología. | Probar cada filtro por separado y explicar parámetros. |
-| Efecto e interfaz | Preparar las propuestas y ajustar el efecto elegido. | Trackbars y visualización de pasos intermedios. | Ajustar el diseño visual y escribir su explicación matemática. |
+| Efecto e interfaz | Preparar la paleta térmica y ajustar los contornos. | Trackbars y visualización de pasos intermedios. | Ajustar el diseño visual y escribir su explicación matemática. |
 | Comparación CPU/OpenCL | Versión equivalente con `UMat` y comprobación de OpenCL. | Medición de tiempos, FPS y memoria; tablas y gráficas. | Usar el mismo vídeo, resolución y parámetros, y comprobar que los resultados coincidan. |
 | Plataformas | Integración de escritorio con `cv::viz`/VTK. | Integración Android con JNI y C++ nativo. | Compartir el procesamiento y comprobarlo en ambas plataformas. |
 | Entrega | Redactar diseño del efecto y resultados de escritorio. | Redactar integración móvil y comparaciones. | Informe, citas, diagrama, vídeo en inglés y ensayo de defensa. |

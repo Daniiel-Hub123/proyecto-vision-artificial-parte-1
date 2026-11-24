@@ -1,6 +1,6 @@
 # Etapa 2 (Continuación): Detección de Bordes con Sobel y Operación Morfológica
 
-El panel Morfología muestra la dilatación en cruz de 3 × 3 sobre Sobel. Pintura / Vitral aplica su propia erosión al fotograma BGR. Ver [Propuestas de filtros](05-filtros-propuesta.md).
+El panel Morfología muestra la dilatación en cruz de 3 × 3 sobre Sobel. El [filtro térmico](05-filtro-termico.md) usa esa misma salida para dibujar los contornos oscuros.
 
 
 ## Objetivo y Orden del Pipeline
@@ -13,7 +13,7 @@ En este avance se completa la integración de los **cuatro filtros base** requer
 4. **Filtro 3: Detección de Bordes con Sobel** (`Sobel` X e Y + combinación) — Estimación del gradiente espacial (Unidad 2 - Ejemplo 6).
 5. **Filtro 4: Operación Morfológica** (`morphologyEx` con dilatación) — Ajuste y engrosamiento del trazo (Unidad 2 - Ejemplo 7).
 
-El aporte original reunió seis vistas en dos filas de tres. El lienzo actual conserva esas filas y muestra las tres propuestas en una tercera.
+El aporte original reunió seis vistas en dos filas de tres. El lienzo actual conserva esas seis vistas y suma el panel Térmico al final de la segunda fila.
 
 ---
 
@@ -113,4 +113,4 @@ Las dos primeras filas de la ventana `Lienzo` muestran:
 
 La integración de Sobel, dilatación y seis vistas es coherente con el flujo previsto. La dilatación toma máximos en la vecindad en cruz y engrosa los trazos claros; el ejemplo del profesor usa erosión sobre Laplaciano, por lo que aquí se adapta la operación al objetivo de engrosamiento sobre Sobel. No se requiere binarizar para esta dilatación en gris.
 
-Comprobación realizada: `make` termina correctamente. Falta registrar una nueva comprobación visual del lienzo y de la salida con ESC para esta etapa. Los cuatro filtros base y las tres propuestas están integrados. Queda por elegir el efecto para la entrega.
+Comprobación realizada: `make` termina correctamente. Falta registrar una nueva comprobación visual del lienzo y de la salida con ESC para esta etapa. Los cuatro filtros base y el filtro térmico están integrados.
