@@ -8,11 +8,24 @@ using namespace std;
 using namespace cv;
 
 Mat aplicarTermico(const Mat &suavizada, const Mat &bordesMorf) {
-  Mat termico(suavizada.size(), CV_8UC3);
+  // Arreglo de 3 filas y 3 columnas. Los pesos ya suman 1.
+  float pesos[3][3] = {
+      {0.0f, -0.125f, 0.0f},
+      {-0.125f, 1.5f, -0.125f},
+      {0.0f, -0.125f, 0.0f}};
+  // CV_32F guarda los pesos como float de 32 bits, incluidos los decimales.
+  Mat kernel(3, 3, CV_32F, pesos);
 
-  for (int fila = 0; fila < suavizada.rows; fila++) {
-    for (int columna = 0; columna < suavizada.cols; columna++) {
-      int gris = suavizada.at<uchar>(fila, columna);
+  Mat realzada;
+  // Aplica el kernel a suavizada y guarda la salida en realzada.
+  // El -1 conserva la profundidad de entrada: gris de 8 bits.
+  filter2D(suavizada, realzada, -1, kernel);
+  // Crea la salida del mismo tamano, con 8 bits por canal y tres canales BGR.
+  Mat termico(realzada.size(), CV_8UC3);
+
+  for (int fila = 0; fila < realzada.rows; fila++) {
+    for (int columna = 0; columna < realzada.cols; columna++) {
+      int gris = realzada.at<uchar>(fila, columna);
       Vec3b color;
 
       // Cambia de azul a cian, amarillo y rojo en orden BGR.

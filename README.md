@@ -45,7 +45,7 @@ La propuesta de efecto, repartición entre Daniel y Xavier y alcance del primer 
 
 ## Avance actual
 
-Captura de cámara, conversión a gris y cuatro filtros base: ecualización, Gaussiano, Sobel X/Y y dilatación en cruz. El efecto propio aplica una paleta de falso color térmico a las intensidades suavizadas y resalta los contornos dilatados.
+Captura de cámara, conversión a gris y cuatro filtros base: ecualización, Gaussiano, Sobel X/Y y dilatación en cruz. El efecto propio realza el gris suavizado con un kernel de 3 × 3 aplicado mediante `filter2D` y asigna una paleta de falso color térmico. La dilatación de Sobel aporta los contornos.
 
 Quedan pendientes los controles, CPU/OpenCL, mediciones, Android y VTK.
 
@@ -80,7 +80,7 @@ make OPENCV_ROOT=D:/msys64/ucrt64
 make run OPENCV_ROOT=D:/msys64/ucrt64
 ```
 
-También se pueden ajustar `OPENCV_DIR`, `BUILD_DIR`, `APP` y pasar opciones adicionales con `CMAKE_ARGS`. Si se cambia de compilador o instalación de OpenCV, usar una carpeta nueva con `BUILD_DIR` para evitar reutilizar la caché anterior. Se usa Ninja para evitar el problema detectado con MinGW Make y los acentos de la ruta del proyecto.
+El Makefile busca `cmake` en el PATH. Si CMake está instalado en otra ruta y la terminal no lo encuentra, se puede indicar con `make run 'CMAKE=D:/Herramientas/CMake/bin/cmake.exe'`. También se pueden ajustar `OPENCV_DIR`, `BUILD_DIR` y `APP`, o pasar opciones con `CMAKE_ARGS`. Si se cambia de compilador o instalación de OpenCV, usar una carpeta nueva con `BUILD_DIR` para evitar reutilizar la caché anterior. Se usa Ninja para evitar el problema detectado con MinGW Make y los acentos de la ruta del proyecto.
 
 Validación del Makefile: compilación completa correcta y comprobación de los comandos de `make run` mediante `make -n run`; no se realizó una nueva prueba de cámara en este ajuste.
 
