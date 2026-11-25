@@ -7,7 +7,18 @@
 using namespace std;
 using namespace cv;
 
-Mat aplicarTermico(const Mat &suavizada, const Mat &bordesMorf) {
+// Unidad 1 - Ejemplo 3 y Unidad 2 - Ejemplo 7: callback requerido por createTrackbar
+void eventoTrack(int v, void *data) {}
+
+// #Generado con IA: asegura tamano impar >= 1 para kernels
+int tamanoImpar(int v) {
+  if (v < 1)
+    return 1;
+  return (v % 2 == 0) ? v + 1 : v;
+}
+
+Mat aplicarTermico(const Mat &suavizada, const Mat &bordesMorf,
+                   int umbralBorde) {
   // Arreglo de 3 filas y 3 columnas. Los pesos ya suman 1.
   float pesos[3][3] = {
       {0.0f, -0.125f, 0.0f}, {-0.125f, 1.5f, -0.125f}, {0.0f, -0.125f, 0.0f}};
@@ -38,9 +49,10 @@ Mat aplicarTermico(const Mat &suavizada, const Mat &bordesMorf) {
       }
 
       int borde = bordesMorf.at<uchar>(fila, columna);
-      if (borde > 70) {
-        // Mezcla con gris oscuro. El peso crece de 0 a 1 entre 70 y 255.
-        double peso = (borde - 70) / 185.0;
+      if (borde > umbralBorde) {
+        // Mezcla con gris oscuro. El peso crece de 0 a 1 entre umbralBorde y 255.
+        double divisor = max(1, 255 - umbralBorde); // #Generado con IA
+        double peso = (borde - umbralBorde) / divisor;
         for (int canal = 0; canal < 3; canal++) {
           color[canal] =
               static_cast<uchar>((1.0 - peso) * color[canal] + peso * 30);
@@ -68,9 +80,16 @@ int main() {
   Mat lienzo, vistaBgr;
   int resultado = 0;
 
-  Mat elementoMorf = getStructuringElement(MORPH_CROSS, Size(3, 3));
-
   namedWindow("Lienzo", WINDOW_NORMAL);
+
+  // Unidad 1 - Ejemplo 3 y Unidad 2 - Ejemplo 7: Trackbars de control
+  createTrackbar("Kernel Gauss", "Lienzo", nullptr, 31, eventoTrack, NULL);
+  setTrackbarPos("Kernel Gauss", "Lienzo", 5);
+  createTrackbar("Kernel Morf", "Lienzo", nullptr, 21, eventoTrack, NULL);
+  setTrackbarPos("Kernel Morf", "Lienzo", 3);
+  createTrackbar("Umbral Borde", "Lienzo", nullptr, 255, eventoTrack, NULL);
+  setTrackbarPos("Umbral Borde", "Lienzo", 70);
+
   cout << "Presiona ESC en el lienzo para salir." << endl;
 
   while (true) {
@@ -83,13 +102,20 @@ int main() {
       break;
     }
 
+    // #Generado con IA: lectura de trackbars y ajuste a tamanos impares validos
+    int kGauss = tamanoImpar(getTrackbarPos("Kernel Gauss", "Lienzo"));
+    int kMorf = tamanoImpar(getTrackbarPos("Kernel Morf", "Lienzo"));
+    int umbralBorde = getTrackbarPos("Umbral Borde", "Lienzo");
+
+    Mat elementoMorf = getStructuringElement(MORPH_CROSS, Size(kMorf, kMorf));
+
     cvtColor(frame, gris, COLOR_BGR2GRAY);
 
     // 1. Redistribuye las intensidades del gris para realzar el contraste
     equalizeHist(gris, ecualizada);
 
-    // 2. Suaviza la imagen ecualizada con una ventana de 5 x 5 pixeles
-    GaussianBlur(ecualizada, suavizada, Size(5, 5), 0);
+    // 2. Suaviza la imagen ecualizada con el tamano de kernel seleccionado
+    GaussianBlur(ecualizada, suavizada, Size(kGauss, kGauss), 0);
 
     // 3. Deteccion de bordes con Sobel en X e Y y combinacion
     Sobel(suavizada, gX, CV_16S, 1, 0, 3, 1, 0);
@@ -101,7 +127,7 @@ int main() {
     // 4. La dilatacion en cruz engrosa los bordes de Sobel.
     morphologyEx(bordesSobel, bordesMorf, MORPH_DILATE, elementoMorf);
 
-    Mat termico = aplicarTermico(suavizada, bordesMorf);
+    Mat termico = aplicarTermico(suavizada, bordesMorf, umbralBorde);
 
     int ancho = frame.cols;
     int alto = frame.rows;
