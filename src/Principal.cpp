@@ -10,9 +10,7 @@ using namespace cv;
 Mat aplicarTermico(const Mat &suavizada, const Mat &bordesMorf) {
   // Arreglo de 3 filas y 3 columnas. Los pesos ya suman 1.
   float pesos[3][3] = {
-      {0.0f, -0.125f, 0.0f},
-      {-0.125f, 1.5f, -0.125f},
-      {0.0f, -0.125f, 0.0f}};
+      {0.0f, -0.125f, 0.0f}, {-0.125f, 1.5f, -0.125f}, {0.0f, -0.125f, 0.0f}};
   // CV_32F guarda los pesos como float de 32 bits, incluidos los decimales.
   Mat kernel(3, 3, CV_32F, pesos);
 
@@ -39,9 +37,14 @@ Mat aplicarTermico(const Mat &suavizada, const Mat &bordesMorf) {
         color = Vec3b(0, 255 - cambio, 255);
       }
 
-      // Oscurece los contornos reforzados por la dilatacion.
-      if (bordesMorf.at<uchar>(fila, columna) > 70) {
-        color = Vec3b(30, 30, 30);
+      int borde = bordesMorf.at<uchar>(fila, columna);
+      if (borde > 70) {
+        // Mezcla con gris oscuro. El peso crece de 0 a 1 entre 70 y 255.
+        double peso = (borde - 70) / 185.0;
+        for (int canal = 0; canal < 3; canal++) {
+          color[canal] =
+              static_cast<uchar>((1.0 - peso) * color[canal] + peso * 30);
+        }
       }
       termico.at<Vec3b>(fila, columna) = color;
     }

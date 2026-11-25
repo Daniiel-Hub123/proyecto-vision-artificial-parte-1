@@ -24,7 +24,13 @@ Cada píxel realzado se lee con `at<uchar>` y se convierte a BGR con `Vec3b`, co
 | 86 a 170 | Cian a amarillo |
 | 171 a 255 | Amarillo a rojo |
 
-El factor 3 permite recorrer 255 niveles de un canal a lo largo de cada tramo de 85. Si el borde dilatado supera 70, el píxel se pinta gris oscuro con `Vec3b(30, 30, 30)`.
+El factor 3 permite recorrer 255 niveles de un canal a lo largo de cada tramo de 85.
+
+## Contornos con mezcla ponderada
+
+Hasta un valor de borde de 70 se conserva el color de la paleta. Por encima se calcula el peso del gris oscuro con `peso = (borde - 70) / 185.0`. El 185 es la diferencia entre 255 y 70, de modo que el peso llega a 1 en un borde máximo.
+
+En cada canal se calcula `salida = (1 - peso) * color + peso * 30`. Se aplica la misma idea de mezcla ponderada del Ejemplo 6, pero aquí el peso depende de cada píxel. Los bordes moderados conservan parte del color y los más fuertes se acercan al gris oscuro.
 
 Ecualización y Gaussiano preparan las intensidades. El kernel propio realza el contraste local para la paleta manual. Sobel y la morfología se calculan sobre el gris suavizado y aportan los contornos.
 
